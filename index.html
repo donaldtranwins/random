@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular DOM and Events</title>
+    <!-- Add Angular CDN below -->
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+</head>
+<body ng-app="myApp">
+<div ng-controller="formController as fc" class="container">
+    <div class="page-header h3">Angular Controllers</div>
+    <div class="form-group form-group-sm col-xs-12 col-md-3">
+        <div class="input-group input-group-sm form-group">
+            <span class="input-group-addon"> First Name</span>
+            <input ng-model="fc.form.fname" ng-disabled="fc.disableInput(fc.getRemainingChars(fc.form.fname))" type="text" class="form-control input-sm">
+            <div class="input-group-btn">
+                <span class="btn label label-{{ fc.getRemainingChars(fc.form.fname) > 6 ? 'success' :
+                fc.getRemainingChars(fc.form.fname) > 0 ? 'warning' : 'danger' }}">{{ fc.getRemainingChars(fc.form.fname) }}</span></span>
+            </div>
+        </div>
+        <div class="input-group input-group-sm form-group">
+            <span class="input-group-addon"> Last Name</span>
+            <input ng-model="fc.form.lname" ng-disabled="fc.disableInput(fc.getRemainingChars(fc.form.lname))" type="text" class="form-control input-sm">
+            <div class="input-group-btn">
+                <span class="btn label label-{{ fc.getRemainingChars(fc.form.lname) > 6 ? 'success' :
+                fc.getRemainingChars(fc.form.lname) > 0 ? 'warning' : 'danger' }}">{{ fc.getRemainingChars(fc.form.lname) }}</span></span>
+            </div>
+        </div>
+        <div class="input-group input-group-sm form-group">
+            <span class="input-group-addon bg-info"> Profession</span>
+            <input ng-model="fc.form.profession" ng-disabled="fc.disableInput(fc.getRemainingChars(fc.form.profession))" type="text" class="form-control input-sm">
+            <div class="input-group-btn">
+                <span class="btn label label-{{ fc.getRemainingChars(fc.form.profession) > 6 ? 'success' :
+                fc.getRemainingChars(fc.form.profession) > 0 ? 'warning' : 'danger' }}">{{ fc.getRemainingChars(fc.form.profession) }}</span></span>
+            </div>
+        </div>
+        <div class="input-group input-group-sm form-group">
+            <span class="input-group-addon"> Companions</span>
+            <textarea ng-model="fc.form.companions" ng-disabled="fc.disableInput(charsRemaining)" class="form-control" rows="2"></textarea>
+        </div>
+        <button ng-click="fc.add()" class="btn btn-primary btn-sm">Add</button>
+        <button ng-click="fc.clear()" class="btn btn-primary btn-sm">Clear</button><span class="help-block pull-right">
+        <span class="label label-{{ charsRemaining > 10 ? 'success' :
+                charsRemaining > 0 ? 'warning' : 'danger' }}" ng-model="charsRemaining = fc.getCompanionsLength()">{{ charsRemaining }}</span></span><br><br>
+        <div class="alert alert-{{ fc.index % 3 == 0 ? 'info' : fc.index % 3 == 1 ? 'warning' : 'danger' }}" ng-show="fc.submitted">
+            <strong>{{ fc.submitted }}</strong> was added
+        </div>
+    </div>
+    <div class="col-xs-12 col-md-9">
+        <table class="table table-bordered table-hover table-responsive">
+            <tbody>
+            <tr class="success">
+                <th>Full Name</th>
+                <th>Profession</th>
+                <th>Companions</th>
+            </tr>
+            <tr ng-repeat="data in fc.formArray">
+                <td class="col-xs-4 {{ $index % 3 == 0 ? 'info' : $index % 3 == 1 ? 'warning' : 'danger' }}">{{ data.fname+" "+data.lname }}</td>
+                <td class="col-xs-3 {{ $index % 3 == 0 ? 'info' : $index % 3 == 1 ? 'warning' : 'danger' }}">{{ data.profession }}</td>
+                <td class="col-xs-5 {{ $index % 3 == 0 ? 'info' : $index % 3 == 1 ? 'warning' : 'danger' }}">{{ data.companions }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    var app = angular.module("myApp", []);
+    app.controller("formController",function () {
+        this.maxCompanionsLength = 40;
+        this.form = {};
+        this.index = null;
+        this.submitted;
+        this.formArray = [
+            {fname: "Luke",
+                lname: "Skywalker",
+                profession: "Jedi Guardian",
+                companions: "R2-D2, Wedge Antilles"},
+            {fname: "Han",
+                lname: "Solo",
+                profession: "Scoundrel",
+                companions: "Chewbacca"},
+            {fname: "Darth",
+                lname: "Revan",
+                profession: "Sith Lord",
+                companions: "Darth Malak, Bastila Shan"},
+            {fname: "Sabine",
+                lname: "Wren",
+                profession: "Bounty Hunter",
+                companions: "Kanan Jarrus, Garazeb Orrelios"},
+            {fname: "Bastila",
+                lname: "Shan",
+                profession: "Jedi Sentinel",
+                companions: "Darth Malak, Jedi Knight Revan"}
+        ];
+        this.add = function(){
+            this.submitted = this.form.fname+" "+this.form.lname;
+            this.formArray.push(this.form);
+            this.form = {};
+            this.form.companions = '';
+            this.index = this.formArray.length-1;
+        };
+        this.getRemainingChars = function(element){
+            if (element == undefined || element.length == 0){
+                return '';
+            }
+            return 16 - element.length;
+        };
+        this.getCompanionsLength = function(){
+            if (this.form.companions === ''){
+                return '';
+            }
+            return this.maxCompanionsLength - this.form.companions.length;
+        };
+        this.clear = function(){
+            this.form = {};
+            this.form.companions = '';
+            this.submitted = '';
+        };
+        this.disableInput = function(charsRemaining){
+            if (charsRemaining === 0){
+                return true;
+            } else {
+                return false;
+            }
+        }
+    });
+</script>
+</body>
+</html>
