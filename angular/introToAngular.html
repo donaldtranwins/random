@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular Intro</title>
+    <meta name="author" content="Donald J. Tran">
+    <meta name="viewport" content="width=device-width">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+</head>
+<body ng-app>
+    <div ng-init="roster=[]; maxSignups=5; name='';">
+        <input type="text" ng-model="name" ng-disabled="roster.length === maxSignups">
+        <p ng-show="roster.length >= maxSignups">This class is full!</p>
+        <button ng-click="roster.push(name); name=''" ng-disabled="roster.length >= maxSignups" ng-hide="roster.length >= maxSignups">Add to list</button>
+        <ul>
+            <li ng-repeat="person in roster track by $index">{{ person + ' index is: ' + $index}}</li>
+        </ul>
+    </div>
+</body>
+</html>
