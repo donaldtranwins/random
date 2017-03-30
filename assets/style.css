@@ -1,0 +1,385 @@
+/*General - found on all pages*/
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+/*General - style text*/
+.regText, .lgText, .coloredBox {
+    font-size: 14px;
+    color: #6a6969;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.lgText {
+    font-size: 20px;
+}
+.coloredBox p {
+    font-size: 12px;
+}
+.textStyling div {
+    margin: 20px 0;
+}
+.textStyling p {
+    margin: 12px 0;
+}
+.footerText, .copyrightText {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #ffffff;
+    font-size: 12px;
+}
+.copyrightText {
+    font-size: 11px;
+    text-align: center;
+}
+.visitUs a[href^="mailto:"], .giftWrapper a[href^="mailto:"] {
+    text-decoration: none;
+    color: #df5277;
+}
+/*General - style for UL */
+.giftWrapper, .visitContactWrapper,
+.macaronWrapper, .whenBest,
+.welcomeWrapper {
+    width: 85%;
+    margin: 40px auto;
+}
+.macaronList, .giftWrapper ul,
+.macaronWrapper ul {
+    position: relative;
+    left: 25px;
+}
+/*Navigaton Menu/Header Area*/
+header {
+    width: 100%;
+    height: 72px;
+    background-color: #fffabe;
+}
+nav {
+    text-align: center;
+    padding-top: 10px;
+}
+nav li {
+    display: inline-block;
+    list-style: none;
+}
+nav ul a {
+    color: #515151;
+    display: block;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    padding: 0 4px;
+}
+nav a:hover, .active {
+    color: #D42551;
+}
+.underNavImg {
+    max-width: 100%;
+    max-height: 400px;
+}
+/*Footer*/
+footer {
+    width: 100%;
+    height: 80px;
+    background-color: #df5277;
+    margin-top: 25px;
+}
+footer div:not(:last-child) {
+    display: inline-block;
+    width: 48.75%;
+    margin-top: 10px;
+}
+footer div:nth-child(odd):not(:last-child) {
+    text-align: right;
+    margin-right: 1.5%;
+    margin-left: 5.5%;
+}
+footer div:nth-child(even) {
+    width: 35%;
+}
+.copyrightText {
+    margin-top: 10px;
+}
+.icon {
+    height: 11px;
+    margin-right: 8px;
+}
+.facebook {
+    margin-left: 8px;
+}
+/*Specific Pages*/
+/*Welcome Page Boxes*/
+/*This section is for the colored boxes that give store info on home page*/
+.boxWrap {
+    text-align: center;
+}
+.coloredBox {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    width: 126px;
+    height: 140px;
+    background-color: #fffabe;
+    margin: 5px 5px;
+    text-align: left;
+}
+.coloredBox section {
+    padding: 5px 0 0 5px;
+}
+.coloredBox section div, .coloredBox p {
+    margin-top: 5px;
+}
+.coloredBox div~p {
+    margin-top: 12px;
+}
+.flavor > p {
+    margin-top: 20px;
+}
+.boxInABox {
+    width: 126px;
+    height: 33px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+#chocolate~.boxInABox {
+    background-color: #824603;
+}
+#passionFruit~.boxInABox {
+    background-color: #df5277;
+}
+#raspberry~.boxInABox {
+    background-color: #a2304e;
+}
+#caramel~.boxInABox{
+    background-color: #c39005;
+}
+.boxInABox p {
+    padding-left: 10px;
+    color: white;
+}
+#chocolate:after, #coconut:after,
+#violet:after, #greenTea:after,
+#passionFruit:after, #vanilla:after,
+#coffee:after, #pistachio:after,
+#raspberry:after, #lemon:after,
+#rose:after, #tiffany:after,
+#caramel:after, #almond:after {
+    position: absolute;
+    right: 10px;
+}
+#chocolate:after {
+    content: url("images/chocolate.png");
+}
+#coconut:after {
+    content: url("images/coconut.png");
+}
+#violet:after {
+    content: url("images/violet-cassis.png");
+}
+#greenTea:after {
+    content: url("images/green-tea.png");
+}
+#passionFruit:after {
+    content: url("images/passion-fruit.png");
+}
+#vanilla:after {
+    content: url("images/vanilla.png");
+}
+#coffee:after {
+    content: url("images/coffee.png");
+}
+#pistachio:after {
+    content: url("images/pistachio.png")
+}
+#raspberry:after {
+    content: url("images/raspbery.png");
+}
+#lemon:after {
+    content: url("images/lemon.png");
+}
+#rose:after {
+    content: url("images/rose.png");
+}
+#tiffany:after {
+    content: url("images/tiffany-blue.png");
+}
+#caramel:after {
+    content: url("images/caramel.png");
+}
+#almond:after {
+    content: url("images/almond.png");
+}
+/*Our Macarons Page*/
+.macaronList {
+    width: 140px;
+}
+/*Gifts & Parties*/
+.giftWrapper ul {
+    font-size: 9px;
+}
+/*Contact Us Page*/
+.visitContactWrapper {
+    position: relative;
+}
+.visitUs ul {
+    list-style: none;
+}
+hr {
+    position: relative;
+    color: #f5f5f5;
+    width: 100%;
+}
+.contact {
+    display: block;
+    margin: 0 auto;
+}
+legend {
+    margin: 20px 0;
+}
+input[type="button"] {
+    width: 50%;
+    position: relative;
+    left: 50%;
+}
+input[type="text"], input[type="email"],
+textarea {
+    padding-left: 10px;
+}
+input, textarea {
+    background-color: #f5f5f5;
+    width: 100%;
+    height: 35px;
+    margin-top: 10px;
+    border: 0;
+}
+textarea {
+    height: 70px;
+}
+.macarons {
+    display: none;
+}
+/*Media Query for larger sized screen*/
+@media screen and (min-width: 600px) {
+    body {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+    nav img {
+        float: left;
+        padding: 0;
+        margin-top: 15px;
+        margin-left: 50px;
+    }
+    nav li {
+        margin-top: 30px;
+        margin-right: 2vw;
+    }
+    footer {
+        text-align: center;
+    }
+    footer div:not(:last-child) {
+        width: 25%;
+        margin-top: 20px;
+    }
+    footer div:nth-child(odd):first-child,
+    footer:first-child {
+        text-align: left;
+    }
+    footer div:nth-child(n):not(:last-child) {
+        margin-right: 0;
+        margin-left: 0;
+    }
+    footer div:nth-child(4) {
+        width: 5%;
+    }
+    /*our macarons page*/
+    .macaronWrapper {
+        background: url("images/our-macarons-background.png") 100% 45% no-repeat;
+        -webkit-background-size: 96%;
+        background-size: 96%;
+        height: 410px;
+    }
+    /*gift & parties page*/
+    .giftWrapper {
+        /*NOTE: Could not figure out how to get background-size inside the Background property*/
+        background: url("images/gifts-parties-background.png") 90% 90% no-repeat ;
+        -webkit-background-size: 97%;
+        background-size: 97%;
+        height: 500px;
+    }
+    .giftWrapper ul {
+        font-size: 14px;
+    }
+    .giftWrapper ul span {
+        right: 14px;
+    }
+    .partyTower {
+        width: 60%;
+    }
+}
+@media screen and (min-width: 750px) {
+    nav li {
+        margin-right: 5vw;
+    }
+    /*Gift & Parties*/
+    .giftBoxes {
+        width: 63%;
+    }
+    .partyTower {
+        width: 65%;
+    }
+    /*Welcome Page*/
+    .welcomeMacarons {
+        display: inline-block;
+        vertical-align: top;
+        width: 25%;
+        padding-top: 100px;
+
+    }
+    .welcomeWrapper {
+        display: inline-block;
+        padding-left: 15px;
+        width: 75%;
+    }
+    /*Contact Us Page*/
+    hr {
+        display:none;
+    }
+    .visitContactWrapper {
+        font-size: 0;
+    }
+    .visitUs, .contact {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+    }
+    .visitUs {
+        padding-right: 5%;
+    }
+    section {
+        margin: 0 auto;
+        width: 95%;
+        font-size: 0;
+    }
+}
+@media screen and (min-width: 960px) {
+    .underNavImg {
+    }
+    /*Gift & Parties*/
+    .partyTower {
+        width: 70%;
+    }
+    /*Contact Us Page*/
+    .visitContactWrapper {
+        display: inline-block;
+        width: 70%;
+    }
+    .contactMacarons {
+        display: inline-block;
+        vertical-align: top;
+        width: 25%;
+        padding: 100px 0 0 70px;
+    }
+}
