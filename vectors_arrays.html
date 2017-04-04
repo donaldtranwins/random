@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        // FIFO  💩  LILO
+        function Queue() {
+            this.data = [];
+            this.getData = function() {
+                //return the appropriate piece of information and remove it from the data
+                //aka return this.data.shift();
+                var output = this.data[0];
+                if (output === undefined) {
+                    console.warn("Queue is empty");
+                    return false;
+                }
+                var newArray = [];
+                for (var i = 1; i < this.data.length; i++) {
+                    newArray[i - 1] = this.data[i];
+                }
+                this.data = newArray;
+                return output;
+            };
+            this.addData = function(newValue) {
+                //add the new value to the appropriate place in the data
+                //aka this.data.push(newValue);
+                var newArray = [];
+                for (var i = 0; i < this.data.length; i++) {
+                    newArray[i] = this.data[i];
+                }
+                newArray[i] = newValue;
+                this.data = newArray;
+            }
+        }
+
+        // FILO  💩  LIFO
+        function Stack() {
+            this.data = [];
+            this.getData = function() {
+                //return the appropriate piece of information and remove it from the data
+                //aka return this.data.p💩p();
+                var newArray = [];
+                var output = this.data[this.data.length - 1];
+                if (output === undefined) {
+                    console.warn("Stack is empty");
+                    return false;
+                }
+                for (var i = 0; i < this.data.length - 1; i++) {
+                    newArray[i] = this.data[i];
+                }
+                this.data = newArray;
+                return output;
+            };
+            this.addData = function(newValue) {
+                //add the new value to the appropriate place in the data
+                //aka this.data.push(newValue);
+                var newArray = [];
+                for (var i = 0; i < this.data.length; i++) {
+                    newArray[i] = this.data[i];
+                }
+                newArray[i] = newValue;
+                this.data = newArray;
+            }
+        }
+
+        var myQueue = new Queue();
+        myQueue.addData(0);
+        myQueue.addData(1);
+        myQueue.addData(2);
+        myQueue.addData(3);
+        console.log(myQueue.getData()); //0
+        console.log(myQueue.getData()); //1
+        myQueue.addData(4);
+        console.log(myQueue.data); //2,3,4
+
+
+        var myStack = new Stack();
+        myStack.addData(0);
+        myStack.addData(1);
+        myStack.addData(2);
+        myStack.addData(3);
+        console.log(myStack.getData()); //3
+        console.log(myStack.getData()); //2
+        myStack.addData(4);
+        console.log(myStack.data); //0,1,4
+
+
+        function Vector() {
+            this.data = [];
+            this.length = 0; //the actual length of the vector
+            this.addData = function(newValue) {
+                //add value to the end of the data.
+                //If there is no room, make the array twice as big as it was before
+                //and null fill the array
+
+                //every time you have to double the array,
+                //make a brand new array, copy the values over
+                //and destroy the original array
+                console.log("last value: " + this.data[this.data.length-1]);
+                if (this.data[this.data.length-1] !== null) {
+                    console.log("need more space.  creating a block");
+                    this.length = this.data.length * 2 || 1;
+                    var newArray = [];
+                    for (var i = 0; i < this.length; i++) {
+                        newArray[i] = null;
+                    }
+                    console.log(newArray);
+                    for (var j = 0; j < this.data.length; j++) {
+                        newArray[j] = this.data[j];
+                    }
+                    this.data = newArray;
+                }
+                for (var a = 0; a < this.data.length; a++){
+                    if(this.data[a] === null){
+                        this.data[a] = newValue;
+                        break;
+                    }
+                }
+                console.log(this.data);
+            };
+            this.getData = function(index) {
+                //return the piece of data at the index specified
+                return this.data[index];
+            }
+        }
+        var myVector = new Vector();
+        myVector.addData(7);
+        myVector.addData(5);
+        myVector.addData(3);
+        myVector.addData(2);
+        myVector.addData(8);
+        myVector.addData(6);
+        myVector.addData(1);
+        myVector.addData(0);
+        myVector.addData(4);
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>
