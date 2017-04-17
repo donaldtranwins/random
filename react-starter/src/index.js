@@ -8,6 +8,7 @@ import reduxPromise from 'redux-promise';
 import App from './components/app';
 import ViewList from './components/view_list';
 import AddForm from './components/addForm';
+import ViewTodo from './components/viewTodo';
 
 import rootReducer from './reducers/index';
 
@@ -19,6 +20,7 @@ ReactDOM.render(
             <Route path="/" component={App}>
                 <IndexRoute component={ViewList}/>
                 <Route path="/new-todo" component={AddForm} />
+                <Route path="/todo/:id" component={ViewTodo} />
             </Route>
         </Router>
     </Provider>,

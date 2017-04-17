@@ -1,10 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
+import { addTodo } from '../actions/index';
 
 class AddForm extends Component {
 
-    addTodo(values){
+    static contextTypes = {
+        router: PropTypes.object
+    };
+
+    addTodoItem(values){
         console.log("form submitted", values);
+        this.props.addTodo(values).then( () => {
+            this.context.router.push('/');
+        });
     }
 
     render(){
@@ -13,7 +22,7 @@ class AddForm extends Component {
         return (
             <div>
                 <h2>Add a to do item</h2>
-                <form onSubmit={handleSubmit( (formValues) => { this.addTodo(formValues) } )}>
+                <form onSubmit={handleSubmit( (formValues) => { this.addTodoItem(formValues) } )}>
                     <div className="form-group">
                         <label>Title</label>
                         <Field name="title" component="input" type="text" className="form-control"/>
@@ -31,4 +40,5 @@ class AddForm extends Component {
 AddForm = reduxForm({
     form: 'addForm'
 })(AddForm);
-export default AddForm;
+
+export default connect (null, { addTodo : addTodo })(AddForm);

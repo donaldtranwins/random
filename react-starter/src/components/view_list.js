@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import { fetchTodos } from '../actions/index';
 
 class ViewList extends Component {
 
-    getTodos(){
+    componentWillMount(){
         this.props.fetchTodos();
     }
 
@@ -13,14 +14,13 @@ class ViewList extends Component {
 
         const list = this.props.todos.map((item, index) => {
             return (
-                <li key={index}>{item.title}</li>
+                <li key={index}><Link to={`/todo/${item._id}`}>{item.title}</Link></li>
             )
         });
 
         return (
             <div>
                 <h1>List of To Dos</h1>
-                <button onClick={ () => this.getTodos() }>GET THE LIST</button>
                 <ul>
                     {list}
                 </ul>
