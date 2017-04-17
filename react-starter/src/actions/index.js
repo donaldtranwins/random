@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_TODOS, ADD_TODOS, GET_1_TODO } from './types';
+import { FETCH_TODOS, ADD_TODOS, GET_1_TODO, DELETE_TODO, TOGGLE_COMPLETE_TODO } from './types';
 
 
 const BASE_URL = 'http://scottbowlerdev.com/api';
@@ -28,6 +28,24 @@ export function addTodo(item){
 
     return {
         type: ADD_TODOS,
+        payload: request
+    }
+}
+
+export function deleteTodo(id){
+    const request = axios.delete(`${BASE_URL}/todos/${id}${API_KEY}`);
+
+    return {
+        type: DELETE_TODO,
+        payload: request
+    }
+}
+
+export function toggleComplete(id){
+    const request = axios.put(`${BASE_URL}/todos/${id}${API_KEY}`);
+
+    return {
+        type: TOGGLE_COMPLETE_TODO,
         payload: request
     }
 }

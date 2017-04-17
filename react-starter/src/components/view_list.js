@@ -14,13 +14,13 @@ class ViewList extends Component {
 
         const list = this.props.todos.map((item, index) => {
             return (
-                <li key={index}><Link to={`/todo/${item._id}`}>{item.title}</Link></li>
+                <li key={index} className={item.complete? 'text-success' : 'text-danger' }><Link to={`/todo/${item._id}`}>{item.title}</Link>{item.complete ? ' (Completed)' : ''}</li>
             )
         });
 
         return (
             <div>
-                <h1>List of To Dos</h1>
+                <hr/><h1>List of To Dos</h1>
                 <ul>
                     {list}
                 </ul>

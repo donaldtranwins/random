@@ -21,7 +21,7 @@ class AddForm extends Component {
 
         return (
             <div>
-                <h2>Add a to do item</h2>
+                <hr/><h2>Add a to do item</h2>
                 <form onSubmit={handleSubmit( (formValues) => { this.addTodoItem(formValues) } )}>
                     <div className="form-group">
                         <label>Title</label>
