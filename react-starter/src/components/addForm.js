@@ -16,6 +16,16 @@ class AddForm extends Component {
         });
     }
 
+    renderInput({input, label, type, meta: { touched, error }} ){
+        return (
+            <div className={`form-group ${touched && error && 'has-danger'}`}>
+                <label className="form-control-label">{label}</label>
+                <input {...input} type={type} className={`form-control ${ touched && error && 'form-control-danger'}`}/>
+                { touched && error && <div className="form-control-feedback">{error}</div> }
+            </div>
+        )
+    }
+
     render(){
         const { handleSubmit } = this.props;
 
@@ -23,22 +33,33 @@ class AddForm extends Component {
             <div>
                 <hr/><h2>Add a to do item</h2>
                 <form onSubmit={handleSubmit( (formValues) => { this.addTodoItem(formValues) } )}>
-                    <div className="form-group">
-                        <label>Title</label>
-                        <Field name="title" component="input" type="text" className="form-control"/>
-                    </div>
-                    <div className="form-group">
-                        <label>Details</label>
-                        <Field name="details" component="input" type="text" className="form-control"/>
-                    </div>
+                    <Field name="title" component={this.renderInput} type="text" label="Title"/>
+                    <Field name="details" component={this.renderInput} type="text" label="Details"/>
                     <button className="btn btn-outline-success">Add Item</button>
                 </form>
             </div>
         )
     }
 }
+
+function validate(values) {
+    const errors = {};
+
+    if (!values.title){
+        errors.title = 'Please enter a title';
+    }
+    if (!values.details){
+        errors.details = 'Please enter some details';
+    }
+
+    console.log('validate:', errors, values);
+    return errors;
+}
+
+
 AddForm = reduxForm({
-    form: 'addForm'
+    form: 'addForm',
+    validate
 })(AddForm);
 
 export default connect (null, { addTodo : addTodo })(AddForm);

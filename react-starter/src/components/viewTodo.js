@@ -44,7 +44,7 @@ class ViewTodo extends Component {
                 <p className={todo.complete ? 'text-success' : 'text-danger' }>{todo.complete ? `Completed: ${this.toDateString(todo.completed)} ${this.toTimeString(todo.completed)}` : 'Incomplete'}</p>
                 <hr/>
                 <button onClick={() => this.handleDelete(todo._id)} className="btn btn-outline-danger">Delete</button>
-                <button onClick={() => this.handleToggle(todo._id)} className={todo.complete ? 'btn btn-success' : 'btn btn-outline-success' }>{todo.complete ? 'Completed' : 'Complete' }</button>
+                <button onClick={() => this.handleToggle(todo._id)} className={todo.complete ? 'btn btn-success' : 'btn btn-outline-success' }>{todo.complete ? 'Re-open' : 'Complete' }</button>
             </div>
         )
     }

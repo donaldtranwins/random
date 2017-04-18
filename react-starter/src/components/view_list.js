@@ -12,9 +12,17 @@ class ViewList extends Component {
     render(){
         console.log("ViewList Todos: ", this.props.todos);
 
+
         const list = this.props.todos.map((item, index) => {
+            if (item.complete){
+                var liClass = 'list-group-item text-success';
+            } else {
+                liClass = 'list-group-item text-danger'
+            }
             return (
-                <li key={index} className={item.complete? 'text-success' : 'text-danger' }><Link to={`/todo/${item._id}`}>{item.title}</Link>{item.complete ? ' (Completed)' : ''}</li>
+                <li key={index} className={liClass}>
+                    <Link to={`/todo/${item._id}`}>{item.title}</Link>{item.complete ? ' (Completed)' : ''}
+                </li>
             )
         });
 
@@ -22,7 +30,7 @@ class ViewList extends Component {
             <div>
                 <hr/><h1>List of To Dos</h1>
                 <ul>
-                    {list}
+                    { list }
                 </ul>
             </div>
         )
