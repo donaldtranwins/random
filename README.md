@@ -1,3 +1,5 @@
-# Random
-### Random little prototypes and projects.  Some for fun, some for assignments, all for learning.
->Each branch is a different prototype ranging from a large two-day project or a one-hour assignment
+# Axios
+### Axios Demo
+>Axios demo, on its own, outside of React. There are two script files included, one uses ES6 and the other uses ES5.
+
+I, Donald Tran, am not the original author of this demo. 
