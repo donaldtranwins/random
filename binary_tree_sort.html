@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Binary Tree Sort</title>
+    <meta name="author" content="Donald J. Tran">
+    <meta name="viewport" content="width=device-width">
+    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+    <script>
+
+        //             0   1   2   3   4   5   6   7   8    9    10   11   12
+        const test1 = [0, 14, 28, 42, 53, 69, 84, 92, 128, 137, 156, 170, 171];
+        var binaryTree = {};
+
+        binaryTreeSort = (array,oldObject,direction) => {
+            console.log('=== Current Tree ===', binaryTree);
+            //debugger;
+            const middleIndex = Math.floor(array.length / 2);
+            const currentValue = array[middleIndex];
+            const currentObject = { value: currentValue };
+            if (!oldObject){
+                binaryTree = currentObject;
+            } else {
+                oldObject[direction] = currentObject;
+            }
+            if (array.length === 1) {
+                console.log("Final Child Reached: "+array[0]);
+            } else {
+                const left = array.slice(0, middleIndex);
+                let right = array.slice(middleIndex); //We include middleIndex in the slice to not get undefined
+                right.shift(); //Then chop off middleIndex
+                binaryTreeSort(left,currentObject,'left');
+                if (right.length){
+                    binaryTreeSort(right,currentObject,'right');
+                }
+            }
+        };
+
+        binaryTreeSort(test1);
+        console.log("Answer: ", binaryTree);
+
+    </script>
+</head>
+<body>
+Binary Tree Sort
+</body>
+</html>
