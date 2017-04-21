@@ -47,6 +47,6 @@ For example, how many shirts were bought, how many pants were bought, how many s
   GROUP BY type`
 11. Select the total number of each item bought, grouped by month and then by type.  
 I want to know how many of each type of item was bought in each month
->`SELECT COUNT(type) AS purchased, MONTH(added) AS month, type FROM items
-  JOIN purchases ON items.ID=purchases.item_id
-  GROUP BY type`
+>`SELECT MONTH(p.added) AS month, type, COUNT(type) AS purchased FROM items
+    JOIN purchases AS p ON items.ID=p.item_id
+    GROUP BY month, type`
