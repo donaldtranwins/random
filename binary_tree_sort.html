@@ -12,14 +12,14 @@
         const numbers = [0, 14, 28, 42, 53, 69, 84, 92, 128, 137, 156, 170, 171];
         const strings = ['astronomy','biology','chemistry','ecology','geology','immunology','kinesiology','microbiology','physiology','radiology','virology','zoology'];
 
-        binaryTreeSort = (array, tree = {}, oldObject, direction) => {
+        binaryTreeSort = (array, tree = {}, parentObject, direction) => {
             const middleIndex = Math.floor(array.length / 2);
             const value = array[middleIndex];
             const currentObject = { value };
-            if (!oldObject) {
+            if (!parentObject) {
                 tree = currentObject;
             } else {
-                oldObject[direction] = currentObject;
+                parentObject[direction] = currentObject;
             }
             if (array.length > 1) {
                 const leftArray = array.slice(0, middleIndex);
@@ -52,7 +52,7 @@
                 branches += 'branched ';
                 if (string > tree.value) {
                     branches += 'RIGHT > ';
-                    branches = binaryTreeSearch(string, tree.right, branches);
+                    branches = tree.right ? binaryTreeSearch(string, tree.right, branches) : `${string} not found` ;
                 } else if (string < tree.value) {
                     branches += 'LEFT > ';
                     branches = tree.left ? binaryTreeSearch(string, tree.left, branches) : `${string} not found` ;
@@ -63,6 +63,7 @@
             return branches;
         };
 
+        //const strings = ['astronomy','biology','chemistry','ecology','geology','immunology','kinesiology','microbiology','physiology','radiology','virology','zoology'];
         console.log(binaryTreeSearch("kinesiology",sortedStrings));     // root
         console.log(binaryTreeSearch("radiology",sortedStrings));       // right
         console.log(binaryTreeSearch("zoology",sortedStrings));         // right right
