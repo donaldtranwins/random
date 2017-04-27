@@ -44,7 +44,7 @@
         binaryTreeSearch = (string, tree, branches = '') => {
             if (!branches.length)   branches = string + " | \n";
             if (tree.value === undefined) {
-                branches += '404: Your sort function is broken';
+                branches += 'Current node has no value set';
             } else if (tree.value === string) {
                 branches += 'FOUND IT';
                 return branches;
@@ -52,10 +52,10 @@
                 branches += 'branched ';
                 if (string > tree.value) {
                     branches += 'RIGHT > ';
-                    branches = tree.right ? binaryTreeSearch(string, tree.right, branches) : `${string} not found` ;
+                    branches = tree.right ? binaryTreeSearch(string, tree.right, branches) : `${string} is not a science` ;
                 } else if (string < tree.value) {
                     branches += 'LEFT > ';
-                    branches = tree.left ? binaryTreeSearch(string, tree.left, branches) : `${string} not found` ;
+                    branches = tree.left ? binaryTreeSearch(string, tree.left, branches) : `${string} is not a science` ;
                 } else {
                     branches += '404: Your sort function is broken';
                 }
