@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <link href="https:" rel="stylesheet" type="text/css"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script>
+        var id = 1;
+        //junior: array for customer ticket
+        var ticketQueue = [];
+        var ticketQueueObj = new TicketQueue();
+        //senior: make a queue object
+        function TicketQueue(){
+            this.data = [];
+            this.getData = function() {
+                //return the appropriate piece of information and remove it from the data
+                //aka return this.data.shift();
+                var output = this.data[0];
+                if (output === undefined) {
+                    console.warn("Queue is empty");
+                    return false;
+                }
+                var newArray = [];
+                for (var i = 1; i < this.data.length; i++) {
+                    newArray[i - 1] = this.data[i];
+                }
+                this.data = newArray;
+                return output;
+            };
+            this.addData = function(newValue) {
+                //add the new value to the appropriate place in the data
+                //aka this.data.push(newValue);
+                var newArray = [];
+                for (var i = 0; i < this.data.length; i++) {
+                    newArray[i] = this.data[i];
+                }
+                newArray[i] = newValue;
+                this.data = newArray;
+            }
+        }
+
+        function Customer(person){
+            this.id = id++;
+            this.name = person.name;
+            this.email = person.email;
+            this.cid = 1001;
+            this.tickets = {};
+            this.createTicket = function(problem) {
+                var ticket = new Ticket(this,this.cid++,problem);
+                ticket.createSelf();
+            };
+            this.addMessageToTicket = function(id,message){
+                var attemptToAddMessage = this.tickets[id].addMessage(message);
+                if (!attemptToAddMessage){
+                    //dont need to console log here because we did it in the other function
+                } else {
+                    console.warn('Message Queue is full!');
+                }
+            };
+            this.getMessagesOfTicket = function (id) {
+                return this.tickets[id].getMessages();
+            };
+            this.closeTicket = function(id){
+                if (this.tickets[id]) {
+                    this.tickets[id].resolveSelf();
+                } else {
+                    if (id === undefined){
+                        console.warn("Please specify a ticket number");
+                    } else {
+                        console.error(`Ticket #${id} not found`);
+                    }
+                }
+            }
+        }
+
+        function Ticket(customer,id,problem){
+            this.id = id;
+            this.creationTime = new Date();
+            this.customer = customer;
+            this.problem = problem;
+            this.messageMax = 5;
+            this.status = 'created'; //seniors: make this an active getter/setter that only allows "close", "open",
+                            // "updated", and "created".  If close or open, call the appropriate function as well
+            this.messageQueue = [];
+            this.updateStatus = function(status){
+                if (status === 'closed' || status === 'open' || status === 'updated'){
+                    this.status = status;
+                    console.log(`#${id}'s status: ${status}`);
+                } else {
+                    console.warn("Unknown status type: "+status);
+                }
+            };
+            this.addMessage = function (message) {
+                if (this.messageQueue.length < this.messageMax) {
+                    this.messageQueue.push(message);
+                    this.updateStatus('updated');
+                    return true;
+                } else {
+                    return false;
+                }
+            };
+            this.getMessages = function(){
+                return this.messageQueue;
+            };
+            this.createSelf = function(){
+                this.customer.tickets[this.id] = this;
+//                ticketQueue.push(this);
+                ticketQueueObj.addData(this);
+                this.updateStatus('open');
+                ticketQueue[ticketQueue.length] = this; // aka fake push
+            };
+            this.resolveSelf = function(){
+                this.updateStatus('closed');
+//                ticketQueueObj.getData();
+            }
+        }
+        var dan = {
+            name: 'dan',
+            email: 'dan@poopemoji.rocks'
+        };
+        var bill = {
+            name: 'bill',
+            email: 'cunningham@learningfuze.com'
+        };
+        var Bill = {
+            name: 'Bill',
+            email: 'bill@iamleonhardt.com'
+        };
+
+        var c1 = new Customer(dan);
+        var c2 = new Customer(bill);
+        var c3 = new Customer(Bill);
+
+        c1.createTicket();
+        c2.createTicket();
+        c2.createTicket();
+        c3.closeTicket();
+        c3.closeTicket(1337);
+        c2.closeTicket(1001);
+        c2.addMessageToTicket(1002,'second');
+        c2.addMessageToTicket(1001,'first');
+        console.log('messages: ',c2.getMessagesOfTicket(1002));
+
+
+
+
+
+    </script>
+    <title>Customer Tickets MVC OOP Queues Getters Setters and everythjing zajklhdsalk;hfrjlka f</title>
+</head>
+<body>
+
+</body>
+</html>
