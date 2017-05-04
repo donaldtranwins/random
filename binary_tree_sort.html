@@ -63,25 +63,113 @@
             return branches;
         };
 
-        //const strings = ['astronomy','biology','chemistry','ecology','geology','immunology','kinesiology','microbiology','physiology','radiology','virology','zoology'];
-        console.log(binaryTreeSearch("kinesiology",sortedStrings));     // root
-        console.log(binaryTreeSearch("radiology",sortedStrings));       // right
-        console.log(binaryTreeSearch("zoology",sortedStrings));         // right right
-        console.log(binaryTreeSearch("virology",sortedStrings));        // right right left
-        console.log(binaryTreeSearch("physiology",sortedStrings));      // right left
-        console.log(binaryTreeSearch("microbiology",sortedStrings));    // right left left
-        console.log(binaryTreeSearch("ecology",sortedStrings));         // left
-        console.log(binaryTreeSearch("biology",sortedStrings));         // left left
-        console.log(binaryTreeSearch("astronomy",sortedStrings));       // left left left
-        console.log(binaryTreeSearch("chemistry",sortedStrings));       // left left right
-        console.log(binaryTreeSearch("immunology",sortedStrings));      // left right
-        console.log(binaryTreeSearch("geology",sortedStrings));         // left right left
-        console.log(binaryTreeSearch("astrology",sortedStrings));       // nope < < < <
-        console.log(binaryTreeSearch("reflexology",sortedStrings));     // nope > > < <
+//        console.log(binaryTreeSearch("kinesiology",sortedStrings));     // root
+//        console.log(binaryTreeSearch("radiology",sortedStrings));       // right
+//        console.log(binaryTreeSearch("zoology",sortedStrings));         // right right
+//        console.log(binaryTreeSearch("virology",sortedStrings));        // right right left
+//        console.log(binaryTreeSearch("physiology",sortedStrings));      // right left
+//        console.log(binaryTreeSearch("microbiology",sortedStrings));    // right left left
+//        console.log(binaryTreeSearch("ecology",sortedStrings));         // left
+//        console.log(binaryTreeSearch("biology",sortedStrings));         // left left
+//        console.log(binaryTreeSearch("astronomy",sortedStrings));       // left left left
+//        console.log(binaryTreeSearch("chemistry",sortedStrings));       // left left right
+//        console.log(binaryTreeSearch("immunology",sortedStrings));      // left right
+//        console.log(binaryTreeSearch("geology",sortedStrings));         // left right left
+//        console.log(binaryTreeSearch("astrology",sortedStrings));       // nope < < < <
+//        console.log(binaryTreeSearch("reflexology",sortedStrings));     // nope > > < <
+
+        const unbalanced = {
+            value: 50,
+            left: {
+                value: 17,
+                left: {
+                    value: 9,
+                    right: {
+                        value: 14,
+                        left: {
+                            value: 12
+                        }
+                    }
+                },
+                right: {
+                    value: 23,
+                    left: {
+                        value: 19
+                    }
+                }
+            },
+            right: {
+                value: 50,
+                left: {
+                    value: 54,
+                    right: {
+                        value: 72,
+                        left: {
+                            value: 67
+                        }
+                    }
+                }
+            }
+        };
+        resortTree = (tree, array = [], parentValue) => {
+            console.log("New array:",array);
+            if (parentValue){
+                if (tree.value < parentValue){
+                    array.splice(array.indexOf(parentValue), 0, tree.value);
+                } else if (tree.value > parentValue){
+                    array.splice(array.indexOf(parentValue)+1, 0, tree.value);
+                } else if (tree.value === parentValue){
+
+                } else {
+                    array.push(tree.value);
+                }
+            } else {
+                array.push(tree.value);
+            }
+            console.log(array);
+            if (tree.right){
+                resortTree(tree.right, array, tree.value);
+            }
+            if (tree.left){
+                resortTree(tree.left, array, tree.value);
+            }
+            return array;
+        };
+        const notUnbalanced = resortTree(unbalanced);
+        console.log("Now Balanced: ",notUnbalanced);
+
+        recursiveSort = tree => {
+            //first do the left side
+            //do I have any left children?
+            if (tree.left){
+                //if so, call recursively on the left child to get a returned array
+                var left = recursiveSort(tree.left);
+            } else {
+                left = [];
+            }
+            //add myself to the end of the above array (which could be blank if there is no left child)
+            left.push(tree.value);
+            //do I have any right children
+            if (tree.right){
+                //if so call recursively on the right child
+                var right = recursiveSort(tree.right);
+            } else {
+                right = [];
+            }
+            left.concat(right);
+            //then take the result that is returned and tack it onto the array from the previous steps
+            //return the resultant array
+            if (!left.length){
+                left = [tree.value];
+            }
+            return left;
+        };
+        console.log(recursiveSort(unbalanced));
 
     </script>
 </head>
 <body>
-Binary Tree Sort
+Binary Tree Sort<br>
+<img src="2000px-Unbalanced_binary_tree.svg.png" height="500" width="500">
 </body>
 </html>
