@@ -139,30 +139,11 @@
         console.log("Now Balanced: ",notUnbalanced);
 
         recursiveSort = tree => {
-            //first do the left side
-            //do I have any left children?
-            if (tree.left){
-                //if so, call recursively on the left child to get a returned array
-                var left = recursiveSort(tree.left);
-            } else {
-                left = [];
-            }
-            //add myself to the end of the above array (which could be blank if there is no left child)
-            left.push(tree.value);
-            //do I have any right children
-            if (tree.right){
-                //if so call recursively on the right child
-                var right = recursiveSort(tree.right);
-            } else {
-                right = [];
-            }
-            left.concat(right);
-            //then take the result that is returned and tack it onto the array from the previous steps
-            //return the resultant array
-            if (!left.length){
-                left = [tree.value];
-            }
-            return left;
+            let array = tree.left ? recursiveSort(tree.left) : [] ;
+            array.push(tree.value);
+            const right = tree.right ? recursiveSort(tree.right) : [] ;
+            array = array.concat(right);
+            return array; //return the resultant array
         };
         console.log(recursiveSort(unbalanced));
 
