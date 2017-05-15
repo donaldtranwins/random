@@ -70,6 +70,7 @@
     var app = angular.module("myApp", []);
     app.controller("formController",function () {
         this.maxCompanionsLength = 40;
+        this.maxFormLength = 16;
         this.form = {};
         this.index = null;
         this.submitted;
@@ -106,7 +107,7 @@
             if (element == undefined || element.length == 0){
                 return '';
             }
-            return 16 - element.length;
+            return this.maxFormLength - element.length;
         };
         this.getCompanionsLength = function(){
             if (this.form.companions === ''){
@@ -120,11 +121,7 @@
             this.submitted = '';
         };
         this.disableInput = function(charsRemaining){
-            if (charsRemaining === 0){
-                return true;
-            } else {
-                return false;
-            }
+            return charsRemaining === 0;
         }
     });
 </script>
