@@ -12,6 +12,14 @@
         const numbers = [0, 14, 28, 42, 53, 69, 84, 92, 128, 137, 156, 170, 171];
         const strings = ['astronomy','biology','chemistry','ecology','geology','immunology','kinesiology','microbiology','physiology','radiology','virology','zoology'];
 
+        /**
+         *
+         * @param array
+         * @param tree
+         * @param parentObject
+         * @param direction
+         * @returns {{}}
+         */
         binaryTreeSort = (array, tree = {}, parentObject, direction) => {
             const middleIndex = Math.floor(array.length / 2);
             const value = array[middleIndex];
@@ -41,6 +49,13 @@
         const sortedStrings = binaryTreeSort(strings);
         console.log("Answer: ", sortedStrings);
 
+        /**
+         *
+         * @param string
+         * @param tree
+         * @param branches
+         * @returns {string}
+         */
         binaryTreeSearch = (string, tree, branches = '') => {
             if (!branches.length)   branches = string + " | \n";
             if (tree.value === undefined) {
@@ -111,6 +126,14 @@
                 }
             }
         };
+
+        /**
+         *
+         * @param tree
+         * @param array
+         * @param parentValue
+         * @returns {Array}
+         */
         resortTree = (tree, array = [], parentValue) => {
             console.log("New array:",array);
             if (parentValue){
@@ -138,6 +161,11 @@
         const notUnbalanced = resortTree(unbalanced);
         console.log("Now Balanced: ",notUnbalanced);
 
+        /**
+         *
+         * @param tree
+         * @returns {Array}
+         */
         recursiveSort = tree => {
             let array = tree.left ? recursiveSort(tree.left) : [] ;
             array.push(tree.value);
@@ -151,6 +179,6 @@
 </head>
 <body>
 Binary Tree Sort<br>
-<img src="2000px-Unbalanced_binary_tree.svg.png" height="500" width="500">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Unbalanced_binary_tree.svg/1200px-Unbalanced_binary_tree.svg.png" height="500" width="500">
 </body>
 </html>
