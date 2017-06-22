@@ -5,72 +5,128 @@
     <title>Binary Tree Sort</title>
     <meta name="author" content="Donald J. Tran">
     <meta name="viewport" content="width=device-width">
-    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
     <script>
 
-        //               0   1   2   3   4   5   6   7   8    9    10   11   12
-        const numbers = [0, 14, 28, 42, 53, 69, 84, 92, 128, 137, 156, 170, 171];
-        const strings = ['astronomy','biology','chemistry','ecology','geology','immunology','kinesiology','microbiology','physiology','radiology','virology','zoology'];
+        /***********************************************************************************
+         *   A short exercise where I practice Data Structures, specifically Binary Trees. *
+         *   I made functions that created, searched, and balanced binary trees.           *
+         ********************************************************************************* */
+
 
         /**
+         *  Balances an unbalanced binary tree, using recursion.
          *
-         * @param array
-         * @param tree
-         * @param parentObject
-         * @param direction
-         * @returns {{}}
+         *  This is the final method I came up with to perfectly balance an unbalanced binary tree.
+         *  I did not initially conceptualize this method; I came up with balanceTree() first, with all the steps broken down.
+         *      After seeing the balanceTree() function run, and comparing it with the how I visually pictured the function
+         *      would run inside my head, I came up with this recursiveBalance() solution.
+         *
+         * @param tree      {array}    A binary tree, or branches of the tree.
+         * @returns         {Array}    An array concatenated from the returns of the value of a leaf, and the values
+         *                                 of its left and right branches
          */
-        binaryTreeSort = (array, tree = {}, parentObject, direction) => {
-            const middleIndex = Math.floor(array.length / 2);
-            const value = array[middleIndex];
-            const currentObject = { value };
-            if (!parentObject) {
-                tree = currentObject;
-            } else {
-                parentObject[direction] = currentObject;
-            }
-            if (array.length > 1) {
-                const leftArray = array.slice(0, middleIndex);
-                let rightArray = array.slice(middleIndex);
-                rightArray.shift();
-                binaryTreeSort(leftArray,tree,currentObject,'left');
-                if (rightArray.length) {
-                    binaryTreeSort(rightArray,tree,currentObject,'right');
+        recursiveBalance = tree => {
+            const left = tree.left ? recursiveBalance(tree.left) : [] ; // always returns an array, either filled or empty
+            const right = tree.right ? recursiveBalance(tree.right) : [] ; // always returns an array, either filled or empty
+            return [...left, tree.value, ...right];
+        };
+
+        /**
+         *  Balances an unbalanced binary tree, not using true recursion.
+         *
+         *  Although I do technically call a function within itself, it is not true recursion because I have to
+         *      pass in the tree from the parent function call of the call stack as a parameter, and refer to it.
+         *  I made this function in order to visualize what I imagined how the code would run.
+         *  Once I saw it, I created the recursiveBalance() version.
+         *
+         * @param tree              {array}     A binary tree, or branches of the tree.
+         * @param output            {array}     Acts as a global variable; contains the final output, regardless of call stack
+         * @param parentValue       {string}    The value of the parent, used to compare to itself.
+         * @returns                 {Array}     The complete binary tree, or branches of it
+         */
+        balanceTree = (tree, output = [], parentValue) => {
+            console.log("New array:",output);
+            if (parentValue){
+                if (tree.value < parentValue){
+                    output.splice(output.indexOf(parentValue), 0, tree.value);
+                } else if (tree.value > parentValue){
+                    output.splice(output.indexOf(parentValue)+1, 0, tree.value);
+                } else if (tree.value === parentValue){
+
+                } else {
+                    output.push(tree.value);
                 }
             } else {
-                console.log("Final Leaf Reached: "+array[0]);
+                output.push(tree.value);
+            }
+            console.log(output);
+            if (tree.right){
+                balanceTree(tree.right, output, tree.value);
+            }
+            if (tree.left){
+                balanceTree(tree.left, output, tree.value);
+            }
+            return output;
+        };
+
+        /**
+         *  Sorts a balanced string into a Binary Tree.
+         *      Not true recursion as it requires a reference to values from the parent function call on the stack.
+         *
+         * @param values            {array}     required    An array of values to sort into a binary tree.
+         * @param tree              {object}    optional    Branches of a tree that were passed in the parent function call of the recursive call stack.
+         * @param parentBranch      {object}    optional    A reference to the previous branch used to place a direction onto it
+         * @param direction         {string}    optional    A string representing "left" or "right" used by the parent to identify its children
+         * @returns                 {Array}                 The complete binary tree, or branches of it
+         */
+        createBinaryTree = (values, tree = {}, parentBranch, direction) => {
+            const middleIndex = Math.floor(values.length / 2);
+            const value = values[middleIndex];
+            const currentLeaf = { value };
+            if (!parentBranch) {
+                tree = currentLeaf;
+            } else {
+                parentBranch[direction] = currentLeaf;
+            }
+            if (values.length > 1) {
+                const leftBranch = values.slice(0, middleIndex);
+                let rightBranch = values.slice(middleIndex);
+                rightBranch.shift();
+                createBinaryTree(leftBranch,tree,currentLeaf,'left');
+                if (rightBranch.length) {
+                    createBinaryTree(rightBranch,tree,currentLeaf,'right');
+                }
+            } else {
+//                console.log("Final Leaf Reached: "+values[0]);
             }
             return tree;
         };
 
-        const sortedNumbers = binaryTreeSort(numbers);
-        console.log("Answer: ", sortedNumbers);
-
-        const sortedStrings = binaryTreeSort(strings);
-        console.log("Answer: ", sortedStrings);
 
         /**
+         *  Searches a binary tree for a specific string.
+         *      Not true recursion as it requires a reference to values from the parent function call on the stack.
          *
-         * @param string
-         * @param tree
-         * @param branches
-         * @returns {string}
+         * @param   search      {string}    Term to search for
+         * @param   tree        {object}    Branch to examine if the search term is present
+         * @param   branches    {string}    String representing which branches have been traversed.  Consistent throughout all call stacks.
+         * @returns             {string}
          */
-        binaryTreeSearch = (string, tree, branches = '') => {
-            if (!branches.length)   branches = string + " | \n";
+        searchBinaryTree = (search, tree, branches = '') => {
+            if (!branches.length)   branches = `Searching for ${search} | \n`;
             if (tree.value === undefined) {
                 branches += 'Current node has no value set';
-            } else if (tree.value === string) {
+            } else if (tree.value === search) {
                 branches += 'FOUND IT';
                 return branches;
             } else {
                 branches += 'branched ';
-                if (string > tree.value) {
+                if (search > tree.value) {
                     branches += 'RIGHT > ';
-                    branches = tree.right ? binaryTreeSearch(string, tree.right, branches) : `${string} is not a science` ;
-                } else if (string < tree.value) {
+                    branches = tree.right ? searchBinaryTree(search, tree.right, branches) : `${search} is not a science` ;
+                } else if (search < tree.value) {
                     branches += 'LEFT > ';
-                    branches = tree.left ? binaryTreeSearch(string, tree.left, branches) : `${string} is not a science` ;
+                    branches = tree.left ? searchBinaryTree(search, tree.left, branches) : `${search} is not a science` ;
                 } else {
                     branches += '404: Your sort function is broken';
                 }
@@ -78,22 +134,14 @@
             return branches;
         };
 
-//        console.log(binaryTreeSearch("kinesiology",sortedStrings));     // root
-//        console.log(binaryTreeSearch("radiology",sortedStrings));       // right
-//        console.log(binaryTreeSearch("zoology",sortedStrings));         // right right
-//        console.log(binaryTreeSearch("virology",sortedStrings));        // right right left
-//        console.log(binaryTreeSearch("physiology",sortedStrings));      // right left
-//        console.log(binaryTreeSearch("microbiology",sortedStrings));    // right left left
-//        console.log(binaryTreeSearch("ecology",sortedStrings));         // left
-//        console.log(binaryTreeSearch("biology",sortedStrings));         // left left
-//        console.log(binaryTreeSearch("astronomy",sortedStrings));       // left left left
-//        console.log(binaryTreeSearch("chemistry",sortedStrings));       // left left right
-//        console.log(binaryTreeSearch("immunology",sortedStrings));      // left right
-//        console.log(binaryTreeSearch("geology",sortedStrings));         // left right left
-//        console.log(binaryTreeSearch("astrology",sortedStrings));       // nope < < < <
-//        console.log(binaryTreeSearch("reflexology",sortedStrings));     // nope > > < <
+        /**
+         *  Test Cases to plug into our functions
+         */
 
-        const unbalanced = {
+        //                       0   1   2   3   4   5   6   7   8    9    10   11   12
+        const balancedNumbers = [0, 14, 28, 42, 53, 69, 84, 92, 128, 137, 156, 170, 171];
+        const balancedStrings = ['astronomy','biology','chemistry','ecology','geology','immunology','kinesiology','microbiology','physiology','radiology','virology','zoology'];
+        const unbalancedTree = {
             value: 50,
             left: {
                 value: 17,
@@ -114,7 +162,7 @@
                 }
             },
             right: {
-                value: 50,
+                value: 76,
                 left: {
                     value: 54,
                     right: {
@@ -127,53 +175,34 @@
             }
         };
 
-        /**
-         *
-         * @param tree
-         * @param array
-         * @param parentValue
-         * @returns {Array}
-         */
-        resortTree = (tree, array = [], parentValue) => {
-            console.log("New array:",array);
-            if (parentValue){
-                if (tree.value < parentValue){
-                    array.splice(array.indexOf(parentValue), 0, tree.value);
-                } else if (tree.value > parentValue){
-                    array.splice(array.indexOf(parentValue)+1, 0, tree.value);
-                } else if (tree.value === parentValue){
-
-                } else {
-                    array.push(tree.value);
-                }
-            } else {
-                array.push(tree.value);
-            }
-            console.log(array);
-            if (tree.right){
-                resortTree(tree.right, array, tree.value);
-            }
-            if (tree.left){
-                resortTree(tree.left, array, tree.value);
-            }
-            return array;
-        };
-        const notUnbalanced = resortTree(unbalanced);
-        console.log("Now Balanced: ",notUnbalanced);
 
         /**
-         *
-         * @param tree
-         * @returns {Array}
+         *  Calling the functions.
          */
-        recursiveSort = tree => {
-            let array = tree.left ? recursiveSort(tree.left) : [] ;
-            array.push(tree.value);
-            const right = tree.right ? recursiveSort(tree.right) : [] ;
-            array = array.concat(right);
-            return array; //return the resultant array
-        };
-        console.log(recursiveSort(unbalanced));
+        const sortedStrings = createBinaryTree(balancedStrings);
+        const sortedNumbers = createBinaryTree(balancedNumbers);
+        console.log(searchBinaryTree("kinesiology",sortedStrings));     // root
+        console.log(searchBinaryTree("radiology",sortedStrings));       // right
+        console.log(searchBinaryTree("zoology",sortedStrings));         // right right
+        console.log(searchBinaryTree("virology",sortedStrings));        // right right left
+        console.log(searchBinaryTree("physiology",sortedStrings));      // right left
+        console.log(searchBinaryTree("microbiology",sortedStrings));    // right left left
+        console.log(searchBinaryTree("ecology",sortedStrings));         // left
+        console.log(searchBinaryTree("biology",sortedStrings));         // left left
+        console.log(searchBinaryTree("astronomy",sortedStrings));       // left left left
+        console.log(searchBinaryTree("chemistry",sortedStrings));       // left left right
+        console.log(searchBinaryTree("immunology",sortedStrings));      // left right
+        console.log(searchBinaryTree("geology",sortedStrings));         // left right left
+        console.log(searchBinaryTree("astrology",sortedStrings));       // nope < < < <
+        console.log(searchBinaryTree("reflexology",sortedStrings));     // nope > > < <
+        console.log("============================");
+        console.log("Unbalanced Binary Tree balanced recursively: ", recursiveBalance(unbalancedTree) );
+        console.log("============================");
+        console.log("Unbalanced Binary Tree balanced non-recursively: ", balanceTree(unbalancedTree) );
+        console.log("============================");
+        console.log("Numbers: ", sortedNumbers );
+        console.log("============================");
+        console.log("Strings: ", sortedStrings );
 
     </script>
 </head>
